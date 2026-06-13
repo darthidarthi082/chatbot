@@ -166,9 +166,19 @@ def main():
 
     with st.sidebar:
         st.markdown("### LogiSupport AI")
+        # Auto-load from Streamlit secrets if available
+        default_key = ""
+        try:
+            default_key = st.secrets["GROQ_API_KEY"]
+        except:
+            pass
         api_key = st.text_input("🔑 Groq API Key", type="password",
+                                value=default_key,
                                 help="Get free key at console.groq.com")
-        st.caption("Free key at [console.groq.com](https://console.groq.com)\nKey starts with: **gsk_**")
+        if default_key:
+            st.caption("✅ API key loaded automatically")
+        else:
+            st.caption("Free key at [console.groq.com](https://console.groq.com)\nKey starts with: **gsk_**")
         st.markdown("---")
         st.markdown("**Quick Topics**")
         for t in ["🚚 Track Shipment","📅 Delivery ETA","💰 Pricing",
